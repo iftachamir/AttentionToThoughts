@@ -5,21 +5,26 @@ ii = vars.ii;
 
 %% Calculate the current mean of selection likelihoods
 % Common components across domains
-emotionComponent = vars.Emotion(ii-1) * (1 + vars.EmotionalReactivity(ii)); 
-contextProportionComponent_valence = 1 + vars.Context(ii);
+emotionComponent = vars.Emotion(ii-1) * ...
+    (1 + vars.EmotionalReactivity(ii));
 
-% Valence likelihood: Neg. / Ntr.
-IA_nominator_valence = mean([vars.WM_valence_mean(ii-1), ...
+formula_WM_affect_part = mean([vars.WM_valence_sum(ii-1), ...
     emotionComponent]);
-%InternalAttention_mu_valence = IA_nominator_valence / IA_denominator;
-InternalAttention_mu_valence = IA_nominator_valence ...
-    / contextProportionComponent_valence;
+
+formula_context = 2.5 + vars.Context(ii);
+
+% Formlate
+InternalAttention_mu_valence = formula_WM_affect_part ...
+    / formula_context;
+% InternalAttention_muInProb_valence = 1 - ...
+%     (1 / (1+InternalAttention_mu_valence));
+InternalAttention_muInProb_valence = tanh(InternalAttention_mu_valence);
 
 % Task irrelevance: Off/on Task likelihood
 IA_nominator_relevance = vars.WM_irrelevance_mean(ii-1);
 contextProportionComponent_relevance = vars.WM_irrelevance_mean(ii-1) ...
     + vars.Context(ii);
-%InternalAttention_mu_irrelevance = IA_nominator_valence / contextProportion_component;
+
 InternalAttention_mu_irrelevance = IA_nominator_relevance ...
     / contextProportionComponent_relevance;
 
@@ -33,7 +38,7 @@ InternalAttention_mu_irrelevance = IA_nominator_relevance ...
 
 % Valence
 pd_valence = makedist(...
-    'Normal','mu',InternalAttention_mu_valence, ...
+    'Normal','mu',InternalAttention_muInProb_valence, ...
     'sigma',vars.StochasticFactor);
 trunc_pd_valence = truncate(pd_valence,0.01,.99);
 

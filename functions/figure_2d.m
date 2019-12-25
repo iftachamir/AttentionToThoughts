@@ -17,27 +17,27 @@ yyaxis left
 hold on
 % p1 = plot(x, InternalAttention, '--b', ...
 %     x, Emotion, '--r');
-p2 = plot(x, smoothAttention, '-k', ...
-    x, smoothEmotion, '-r', 'LineWidth', 1);
+p2 = plot(x, smoothAttention, '-k', 'LineWidth', 1);
 
-% Add dots reflecting thought type
-a = max([smoothAttention, smoothEmotion]) + .1;
-b = a + .1;
-r = (b-a).*rand(vf.numOfIterations,1) + a;
-s = gscatter(x, r, vf.selectedThought.valence, ...
-    'br','.',9);
 ylim([-.1 1.1])
-hold off
-
-legend(["Attention"; "Affect"; "Neutral Thought"; "Negative Thought"])
-ylim([-.1 1.1])
-title(vf.title, 'HorizontalAlignment', 'right')
-xlabel('Time (secs)')
 ylabel('Selection bias')
 
 yyaxis right
+p2 = plot(x, smoothEmotion, '-r', 'LineWidth', 1);
+ylim([-.1 5.9])
+
+% Add dots reflecting thought type
+a = max([(smoothAttention.*5), smoothEmotion]) + .5;
+b = a + .4;
+r = (b-a).*rand(vf.numOfIterations,1) + a;
+s = gscatter(x, r, vf.selectedThought.valence, ...
+    'br','.',9);
+
+title(vf.title, 'HorizontalAlignment', 'right')
+xlabel('Time (secs)')
 ylabel('Negative affect')
-ylim([-.1 1.1])
+legend(["Attention"; "Affect"; "Neutral Thought"; "Negative Thought"])
+hold off
 
 fig.Units = 'centimeters';
 x0=10;
