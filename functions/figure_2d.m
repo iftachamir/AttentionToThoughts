@@ -24,10 +24,10 @@ ylabel('Selection bias')
 
 yyaxis right
 p2 = plot(x, smoothEmotion, '-r', 'LineWidth', 1);
-ylim([-.1 5.9])
+ylim([-.5 5.5])
 
 % Add dots reflecting thought type
-a = max([(smoothAttention.*5), smoothEmotion]) + .5;
+a = max([(smoothAttention.*5), smoothEmotion]) + .3;
 b = a + .4;
 r = (b-a).*rand(vf.numOfIterations,1) + a;
 s = gscatter(x, r, vf.selectedThought.valence, ...
@@ -36,7 +36,10 @@ s = gscatter(x, r, vf.selectedThought.valence, ...
 title(vf.title, 'HorizontalAlignment', 'right')
 xlabel('Time (secs)')
 ylabel('Negative affect')
-legend(["Attention"; "Affect"; "Neutral Thought"; "Negative Thought"])
+legend(["Attention"; ...
+    "Affect"; ...
+    "Neutral Thought"; ...
+    "Negative Thought"])
 hold off
 
 fig.Units = 'centimeters';
@@ -44,4 +47,6 @@ x0=10;
 y0=10;
 width=16.5;
 height=6;
-set(gcf,'position',[x0,y0,width,height])
+fig.Position = [x0,y0,width,height];
+%set(gcf,'position',[x0,y0,width,height])
+

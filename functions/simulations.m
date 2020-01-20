@@ -44,7 +44,7 @@ for ii = 6:v.numOfIterations
     v.WM_valence_sum(ii) = sum(WM_valence);
     
     WM_irrelevance = v.selectedThought_irrelevance_value(ii-4:ii);
-    v.WM_irrelevance_mean(ii) = sum(WM_irrelevance);
+    v.WM_irrelevance_mean(ii) = mean(WM_irrelevance);
     v.WM_irrelevance_sum(ii) = sum(WM_irrelevance);
     
     %% Emotion
