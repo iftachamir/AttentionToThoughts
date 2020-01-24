@@ -28,6 +28,9 @@ ylim([-.5 5.5])
 
 % Add dots reflecting thought type
 a = max([(smoothAttention.*5), smoothEmotion]) + .3;
+if a > 5
+    a = 5;
+end
 b = a + .4;
 r = (b-a).*rand(vf.numOfIterations,1) + a;
 s = gscatter(x, r, vf.selectedThought.valence, ...

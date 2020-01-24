@@ -36,16 +36,18 @@ for ii = 6:v.numOfIterations
     v.CognitiveReactivity(ii) = v.CognitiveReactivity(1);
     
     %% Internal Attention
-    v = internal_attention_computation_ValenceAndRelevance_1(v);
+    %v = internal_attention_computation_ValenceAndRelevance_1(v);
+    v = IA_computation_Valence_exgauss(v);
+
     
     %% WM storage
     % Sum of previous attended thoughts
     WM_valence = v.selectedThought_valence_value(ii-4:ii);
     v.WM_valence_sum(ii) = sum(WM_valence);
     
-    WM_irrelevance = v.selectedThought_irrelevance_value(ii-4:ii);
-    v.WM_irrelevance_mean(ii) = mean(WM_irrelevance);
-    v.WM_irrelevance_sum(ii) = sum(WM_irrelevance);
+%     WM_irrelevance = v.selectedThought_irrelevance_value(ii-4:ii);
+%     v.WM_irrelevance_mean(ii) = mean(WM_irrelevance);
+%     v.WM_irrelevance_sum(ii) = sum(WM_irrelevance);
     
     %% Emotion
     v.Emotion(ii) = (1 + v.CognitiveReactivity(ii)) * ...
