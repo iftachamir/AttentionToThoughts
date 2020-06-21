@@ -12,7 +12,8 @@ x = 1:vf.numOfIterations;
 % smoothEmotion = smooth(Emotion,30);
 % smoothAttention = smooth(InternalAttention,30);
 smoothEmotion = smoothdata(vf.Emotion, 'gaussian', 10);
-smoothAttention = smoothdata(vf.InternalAttention.valence, 'gaussian', 10);
+smoothAttention = smoothdata(vf.InternalAttention.valence_bias, ...
+    'gaussian', 10);
 yyaxis left
 hold on
 % p1 = plot(x, InternalAttention, '--b', ...
